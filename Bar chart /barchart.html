@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Neon Vertical Bar Chart</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: transparent;
+        font-family: Arial, sans-serif;
+        overflow-y: hidden;
+      }
+
+      .chart-container {
+        display: flex;
+        align-items: flex-end;
+        gap: 15px;
+        width: 80%;
+        height: 300px;
+        padding: 20px;
+      }
+
+      .bar {
+        width: 5%;
+        position: relative;
+        background-color: #31e4f6;
+        /* box-shadow: 0 0 10px 2px #31e4f6; */
+        border-radius: 10px;
+        border-bottom: 5px solid #000000;
+        animation: growBar 2s ease-out forwards,
+          neonGlow 1.5s infinite alternate;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        /* Smooth transition for hover effect */
+      }
+
+      .bar:hover {
+        background-color: #00f884;
+        /* Change color on hover */
+        transform: scale(1.1);
+        /* Slightly scale up on hover */
+        /* Removed box-shadow glow on hover */
+      }
+
+      .bar::after {
+        content: attr(data-label);
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+        color: #fff;
+        font-weight: bold;
+      }
+
+      @keyframes growBar {
+        from {
+          height: 0;
+          opacity: 0;
+        }
+
+        to {
+          height: var(--height);
+          opacity: 1;
+        }
+      }
+
+      /* @keyframes neonGlow {
+      0% {
+        box-shadow: 0 0 10px 2px #0cb6fa;
+      }
+
+      50% {
+        box-shadow: 0 0 20px 5px #0cb6fa;
+      }
+
+      100% {
+        box-shadow: 0 0 10px 2px #0cb6fa;
+      }
+    } */
+
+      /* Custom height for each bar */
+      .bar:nth-child(1) {
+        --height: 50%;
+      }
+
+      .bar:nth-child(2) {
+        --height: 75%;
+      }
+
+      .bar:nth-child(3) {
+        --height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="chart-container">
+      <div class="bar" data-label=""></div>
+      <div class="bar" data-label=""></div>
+      <div class="bar" data-label=""></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: transparent;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .accordion-container {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .column {
+      flex: 1;
+      max-width: 48%;
+    }
+
+    .accordion {
+      background-color: #ffffff;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      border: 1px solid #000000;
+    }
+
+    .accordion-header {
+      background-color: #f9f9f9;
+      color: #333;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px;
+      text-align: left;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      background-color: #f1f1f1;
+    }
+
+    .accordion-header span.toggle-icon {
+      font-size: 1.5rem;
+      color: #000000;
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-content {
+      padding: 0 15px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    }
+
+    .accordion-content.open {
+      max-height: 400px;
+      padding: 15px;
+    }
+
+    .accordion-header.open .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .accordion-container {
+        flex-direction: column;
+      }
+
+      .column {
+        max-width: 100%;
+      }
+
+      .accordion-content.open {
+        max-height: 100%;
+        /* Allow content to fully expand on mobile */
+      }
+    }
+  </style>
+
+  <!-- Add FontAwesome CDN link -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+  <script>
+    function toggleAccordion(index) {
+      const contents = document.querySelectorAll('.accordion-content');
+      const headers = document.querySelectorAll('.accordion-header');
+
+      contents.forEach((content, i) => {
+        const icon = headers[ i ].querySelector('.toggle-icon');
+
+        if (i === index) {
+          // Toggle the selected accordion
+          content.classList.toggle('open');
+          icon.classList.toggle('fa-caret-up', content.classList.contains('open'));
+          icon.classList.toggle('fa-caret-down', !content.classList.contains('open'));
+        } else {
+          // Close others
+          content.classList.remove('open');
+          icon.classList.add('fa-caret-down');
+          icon.classList.remove('fa-caret-up');
+        }
+      });
+    }
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion with Caret</title>
+</head>
+
+<body>
+  <div class="accordion-container">
+    <div class="column">
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(0)">
+          Kök <span class="toggle-icon fa-solid fa-caret-down"></span>
+        </button>
+        <div class="accordion-content" id="section1">
+          <p>Utvändig avtorkning av köksluckor och skåp.<br>
+            Rengöring av kakel och diskbänk samt putsning av diskhon.<br>
+            Utvändig avtorkning av kyl och frys.<br>
+            Utvändig avtorkning av ugn och mikro.<br>
+            Avtorkning av fläkten.<br>
+            Soptunnan töms och avtorkning av sopskåpet.<br>
+            Avtorkning av fria ytor så som bänkar, hyllor, bord och fönsterbrädor.<br>
+            Dammtorkning av lister och eluttag.<br>
+            Putsning av speglar och glaspartier (observera att detta inte inkluderar fönster).<br>
+            Dammsugning av golv samt eventuell matta.<br>
+            Moppning av golvet.</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(1)">
+          Badrum <span class="toggle-icon fa-solid fa-caret-down"></span>
+        </button>
+        <div class="accordion-content" id="section2">
+          <p>Avtorkning av badrumsskåp och luckor (utvändigt).<br>
+            Utvändig avtorkning av tvättmaskin och torktumlare.<br>
+            Eventuella fläckar på kaklet tvättas bort.<br>
+            Putsning av speglar och glaspartier (inte putsning av fönster).<br>
+            Avtorkning av kakel ovanför handfatet.<br>
+            Rengöring av dusch och handfat.<br>
+            Rengöring av toalett.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(2)">
+          Viktig information om din hemstädning <span class="toggle-icon fa-solid fa-caret-down"></span>
+        </button>
+        <div class="accordion-content" id="section3">
+          <p>Städmedel/material som du behöver ha hemma:<br>
+            - Allrengöring (vi rekommenderar Grumme såpa citron).<br>
+            - Kök-/badrumsrengöring för kalkborttagning.<br>
+            - Fönsterputsmedel.<br>
+            - Mikrofiberdukar, minst 6 stycken, tvättade i 60 grader.<br>
+            - Dammsugare och mopp.<br>
+          </p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(3)">
+          Annan bra information om hemstädning <span class="toggle-icon fa-solid fa-caret-down"></span>
+        </button>
+        <div class="accordion-content" id="section4">
+          <p>Priset är baserat på normal nedsmutsning.<br>
+            Vi kan hjälpa till med klädvikning och disk, men kontakta oss för extra tid.<br>
+            Om du är hemma under städningen, vänligen låt vår personal arbeta ostört.<br>
+            Alla hemstädningar sker utan bindningstid.<br>
+            Avbokning sker senast 48 timmar innan bokad tid.<br>
+            Fakturan skickas efter genomförd städning med 10 dagars betalningsvillkor.<br>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rollup Cards</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+      max-width: 1200px;
+    }
+
+    .card {
+      position: relative;
+      width: 250px;
+      height: 300px;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(10, 0, 0, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 20px auto;
+    }
+
+    .title {
+      margin: 10px 0 5px;
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .price {
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .button {
+      display: none;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: linear-gradient(45deg, red, rgb(0, 225, 255));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      transition: background 0.5s ease-in-out;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, red, blue, red);
+    }
+
+    .card:hover .button {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card-container" id="card-container"></div>
+
+  <script>
+    // Data for the cards
+    const cardsData = [
+      { title: "NAME", price: "53,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "63,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "63,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "85,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "45,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "52,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "75,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "49,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "29,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "70,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "90,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "145,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "35,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "40,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "40,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" },
+      { title: "NAME", price: "50,00 € HT", imageUrl: "https://www.shutterstock.com/image-vector/man-shirt-tie-businessman-avatar-600nw-548848999.jpg" }
+    ];
+
+    // Select the card container
+    const cardContainer = document.getElementById("card-container");
+
+    // Generate cards dynamically
+    cardsData.forEach(card => {
+      const cardElement = document.createElement("div");
+      cardElement.className = "card";
+      cardElement.innerHTML = `
+        <div class="card-content">
+          <img src="${card.imageUrl}" alt="Rollup Image">
+          <h2 class="title">${card.title}</h2>
+          <p class="price">${card.price}</p>
+          <button class="button">En savoir plus</button>
+        </div>
+      `;
+      cardContainer.appendChild(cardElement);
+    });
+  </script>
+</body>
+
+</html>

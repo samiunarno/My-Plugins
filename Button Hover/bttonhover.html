@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Buttons</title>
+    <style>
+      body {
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 20px;
+      }
+
+      .button {
+        position: relative;
+        padding: 15px 30px;
+        border: 2px solid #00f5ff;
+        border-radius: 30px;
+        background: transparent;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        overflow: hidden;
+        transition: color 0.4s ease, background 0.4s ease;
+      }
+
+      .button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: #00f5ff;
+        z-index: 0;
+        transition: left 0.4s ease;
+      }
+
+      .button:hover {
+        color: #000000;
+      }
+
+      .button:hover::before {
+        left: 0;
+      }
+
+      .button span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Media Queries for responsiveness */
+      @media (max-width: 768px) {
+        .button {
+          padding: 10px 20px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .button {
+          padding: 8px 15px;
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="buttons">
+      <a
+        href="https://saimakif.wixsite.com/chairblockfinancial/contact"
+        class="button"
+        target="_blank"
+        ><span>Contact</span></a
+      >
+    </div>
+  </body>
+</html>

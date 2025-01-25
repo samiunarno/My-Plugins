@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management System</title>
+  <style>
+    /* General Reset and Font Setup */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Login Page Styling */
+    .login-container {
+      max-width: 450px;
+      margin: 100px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #2C3E50;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 12px;
+      border: 2px solid #BDC3C7;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #3498DB;
+      outline: none;
+    }
+
+    button {
+      width: 90%;
+      padding: 12px;
+      background-color: #3498DB;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980B9;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    /* Dashboard Page Styling */
+    .dashboard-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h2 {
+      font-size: 32px;
+      color: #2C3E50;
+      font-weight: 600;
+    }
+
+    #logoutBtn {
+      background-color: #E74C3C;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    #logoutBtn:hover {
+      background-color: #C0392B;
+    }
+
+    .status-section {
+      margin-top: 20px;
+    }
+
+    .employee-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .employee-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .employee-card h3 {
+      font-size: 22px;
+      color: #34495E;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .employee-card p {
+      color: #7F8C8D;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .status {
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .active {
+      background-color: #27AE60;
+      color: white;
+    }
+
+    .inactive {
+      background-color: #E74C3C;
+      color: white;
+    }
+
+    .employee-card button {
+      background-color: #3498DB;
+      color: white;
+      padding: 12px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+    }
+
+    .employee-card button:hover {
+      background-color: #2980B9;
+    }
+
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .toggle-container {
+      position: relative;
+      width: 70px;
+      height: 35px;
+      background-color: #BDC3C7;
+      border-radius: 25px;
+      transition: background-color 0.4s ease, box-shadow 0.3s ease;
+    }
+
+    .toggle-circle {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: white;
+      transition: left 0.4s ease, background-color 0.3s ease;
+    }
+
+    .toggle-container.active {
+      background-color: #27AE60;
+      box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+    }
+
+    .toggle-container.inactive {
+      background-color: #E74C3C;
+      box-shadow: 0 4px 10px rgba(128, 0, 0, 0.2);
+    }
+
+    .toggle-container.active .toggle-circle {
+      left: 35px;
+      background-color: #fff;
+    }
+
+    .toggle-container.inactive .toggle-circle {
+      left: 3px;
+      background-color: #fff;
+    }
+
+    .notification {
+      color: #27AE60;
+      font-size: 16px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Login Page -->
+  <div class="login-container" id="loginPage">
+    <h2>Login to Your Account</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Enter your ID" required>
+      <input type="password" id="password" placeholder="Enter your password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p id="errorMessage" class="error-message"></p>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div class="dashboard-container" id="dashboardPage" style="display: none;">
+    <header>
+      <h2>Welcome, <span id="userName"></span></h2>
+      <button id="logoutBtn">Logout</button>
+    </header>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="status-section">
+      <h3>Employee Status</h3>
+      <div id="employeeList" class="employee-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // Simulated user data (this should ideally come from a backend)
+    const users = [
+      { id: 'admin', password: 'admin123', role: 'admin', name: 'Admin-Fahim', status: 'active' },
+      { id: 'emp1', password: 'password1', role: 'employee', name: 'Employee 1', status: 'inactive' },
+      { id: 'emp2', password: 'password2', role: 'employee', name: 'Employee 2', status: 'inactive' },
+      { id: 'emp3', password: 'password3', role: 'employee', name: 'Employee 3', status: 'inactive' },
+      { id: 'emp4', password: 'password4', role: 'employee', name: 'Employee 4', status: 'inactive' },
+      { id: 'emp5', password: 'password5', role: 'employee', name: 'Employee 5', status: 'inactive' },
+      { id: 'emp6', password: 'password6', role: 'employee', name: 'Employee 6', status: 'inactive' },
+      { id: 'emp7', password: 'password7', role: 'employee', name: 'Employee 7', status: 'inactive' },
+      { id: 'emp_jar_jar', password: 'password8', role: 'employee', name: 'Emp Jar Jar', status: 'inactive' },
+      { id: 'emp_tar_tar', password: 'password9', role: 'employee', name: 'Emp Tar Tar', status: 'inactive' },
+    ];
+
+    // Login functionality
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Check if user exists
+      const user = users.find(user => user.id === username && user.password === password);
+
+      if (user) {
+        // Store user in localStorage for the session
+        localStorage.setItem('user', JSON.stringify(user));
+
+        // Switch to dashboard
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('dashboardPage').style.display = 'block';
+
+        // Display user name
+        document.getElementById('userName').textContent = user.name;
+
+        // Load employee list, excluding the admin card
+        const employeeList = document.getElementById('employeeList');
+        users.forEach(user => {
+          // Only display employee cards, excluding admin from the list
+          if (user.role === 'employee') {
+            const employeeCard = document.createElement('div');
+            employeeCard.classList.add('employee-card');
+            employeeCard.innerHTML = `
+              <h3>${user.name} (${user.id})</h3>
+              <p>Status: <span class="status ${user.status}">${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</span></p>
+              ${user.id !== 'emp_jar_jar' && user.id !== 'emp_tar_tar' ? ` 
+                <div class="toggle-switch">
+                  <div class="toggle-container ${user.status}">
+                    <div class="toggle-circle" onclick="toggleApproveStatus('${user.id}')"></div>
+                  </div>
+                </div>
+              ` : ''}
+            `;
+            employeeList.appendChild(employeeCard);
+          }
+        });
+      } else {
+        errorMessage.textContent = 'Invalid credentials. Please try again.';
+      }
+    });
+
+    // Dashboard functionality
+    let currentUser = JSON.parse(localStorage.getItem('user'));
+
+    document.getElementById('logoutBtn').addEventListener('click', function () {
+      localStorage.removeItem('user');
+      document.getElementById('loginPage').style.display = 'block';
+      document.getElementById('dashboardPage').style.display = 'none';
+    });
+
+    // Toggle employee status (disable for "emp_jar_jar" and "emp_tar_tar")
+    function toggleApproveStatus(employeeId) {
+      const employee = users.find(user => user.id === employeeId);
+      if (employee && employee.role === 'employee' && employeeId !== 'emp_jar_jar' && employeeId !== 'emp_tar_tar') {
+        employee.status = employee.status === 'inactive' ? 'active' : 'inactive';
+        document.getElementById('employeeList').innerHTML = '';
+        users.forEach(user => {
+          if (user.role === 'employee') {
+            const employeeCard = document.createElement('div');
+            employeeCard.classList.add('employee-card');
+            employeeCard.innerHTML = `
+              <h3>${user.name} (${user.id})</h3>
+              <p>Status: <span class="status ${user.status}">${user.status.charAt(0).toUpperCase() + user.status.slice(1)}</span></p>
+              ${currentUser.role === 'admin' && user.id !== 'emp_jar_jar' && user.id !== 'emp_tar_tar' ? `
+                <div class="toggle-switch">
+                  <div class="toggle-container ${user.status}">
+                    <div class="toggle-circle" onclick="toggleApproveStatus('${user.id}')"></div>
+                  </div>
+                </div>
+              ` : ''}
+            `;
+            document.getElementById('employeeList').appendChild(employeeCard);
+          }
+        });
+      }
+    }
+  </script>
+
+</body>
+
+</html>

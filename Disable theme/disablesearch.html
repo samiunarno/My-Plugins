@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+        select, button {
+            padding: 10px;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+        select {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        button {
+            background-color: #d35400;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <select id="make">
+            <option value="" disabled selected>Select Make</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Honda">Honda</option>
+            <option value="Ford">Ford</option>
+        </select>
+
+        <select id="model" disabled>
+            <option value="" disabled selected>Select Model</option>
+        </select>
+
+        <select id="year" disabled>
+            <option value="" disabled selected>Select Year</option>
+        </select>
+
+        <select id="trim" disabled>
+            <option value="" disabled selected>Select Trim</option>
+        </select>
+
+        <select id="position" disabled>
+            <option value="" disabled selected>Select Position</option>
+        </select>
+
+        <button id="searchButton">Search</button>
+    </div>
+
+    <script>
+        const makeDropdown = document.getElementById('make');
+        const modelDropdown = document.getElementById('model');
+        const yearDropdown = document.getElementById('year');
+        const trimDropdown = document.getElementById('trim');
+        const positionDropdown = document.getElementById('position');
+
+        // Example data for cascading dropdowns
+        const data = {
+            Toyota: {
+                Corolla: [2020, 2021, 2022],
+                Camry: [2018, 2019, 2020]
+            },
+            Honda: {
+                Civic: [2019, 2020, 2021],
+                Accord: [2018, 2019, 2020]
+            },
+            Ford: {
+                Focus: [2017, 2018, 2019],
+                Mustang: [2020, 2021, 2022]
+            }
+        };
+
+        // Enable "Model" dropdown after selecting "Make"
+        makeDropdown.addEventListener('change', () => {
+            const make = makeDropdown.value;
+            modelDropdown.innerHTML = '<option value="" disabled selected>Select Model</option>';
+            if (make) {
+                Object.keys(data[make]).forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelDropdown.appendChild(option);
+                });
+                modelDropdown.disabled = false;
+            }
+        });
+
+        // Enable "Year" dropdown after selecting "Model"
+        modelDropdown.addEventListener('change', () => {
+            const make = makeDropdown.value;
+            const model = modelDropdown.value;
+            yearDropdown.innerHTML = '<option value="" disabled selected>Select Year</option>';
+            if (model) {
+                data[make][model].forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearDropdown.appendChild(option);
+                });
+                yearDropdown.disabled = false;
+                trimDropdown.disabled = false; // Enable Trim (for demo purposes)
+                positionDropdown.disabled = false; // Enable Position (for demo purposes)
+            }
+        });
+
+        // Handle the search button click
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const make = makeDropdown.value;
+            const model = modelDropdown.value;
+            const year = yearDropdown.value;
+            const trim = trimDropdown.value;
+            const position = positionDropdown.value;
+
+            alert(`Searching for: Make=${make}, Model=${model}, Year=${year}, Trim=${trim}, Position=${position}`);
+        });
+    </script>
+</body>
+</html>

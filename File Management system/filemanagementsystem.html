@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Management System</title>
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+      }
+
+      body {
+        background-color: #f0f2f5;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      #fileManager {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 85%;
+        max-width: 1200px;
+        padding: 20px;
+      }
+
+      #fileOperations {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .action-btn {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .action-btn:hover {
+        background-color: #0056b3;
+      }
+
+      #fileContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+      }
+
+      .fileItem {
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .fileItem:hover {
+        background-color: #e9ecef;
+        transform: translateY(-3px);
+      }
+
+      .fileItem p {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .fileItem.selected {
+        border-color: #007bff;
+        background-color: #cce5ff;
+      }
+
+      .fileItem:active {
+        transform: translateY(2px);
+      }
+
+      .fileItem .file-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .fileItem .delete-icon {
+        color: red;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      .fileItem .edit-icon {
+        color: #28a745;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      #fileContainer .fileItem:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fileManager">
+      <div id="fileOperations">
+        <button class="action-btn" id="newFileBtn">New File</button>
+        <button class="action-btn" id="deleteFileBtn">Delete</button>
+        <button class="action-btn" id="renameFileBtn">Rename</button>
+        <button class="action-btn" id="copyFileBtn">Copy</button>
+        <button class="action-btn" id="cutFileBtn">Cut</button>
+        <button class="action-btn" id="pasteFileBtn">Paste</button>
+      </div>
+      <div id="fileContainer">
+        <!-- Files will be displayed here -->
+      </div>
+    </div>
+
+    <script>
+      let files = []; // Array to store file data
+      let clipboard = null; // Clipboard for cut/copy actions
+
+      // UI Elements
+      const fileContainer = document.getElementById("fileContainer");
+      const newFileBtn = document.getElementById("newFileBtn");
+      const deleteFileBtn = document.getElementById("deleteFileBtn");
+      const renameFileBtn = document.getElementById("renameFileBtn");
+      const copyFileBtn = document.getElementById("copyFileBtn");
+      const cutFileBtn = document.getElementById("cutFileBtn");
+      const pasteFileBtn = document.getElementById("pasteFileBtn");
+
+      // Add a new file
+      newFileBtn.addEventListener("click", () => {
+        const fileName = prompt("Enter the file name:");
+        if (fileName) {
+          const newFile = { name: fileName, id: Date.now() };
+          files.push(newFile);
+          renderFiles();
+        }
+      });
+
+      // Render all files
+      function renderFiles() {
+        fileContainer.innerHTML = "";
+        files.forEach((file) => {
+          const fileItem = document.createElement("div");
+          fileItem.classList.add("fileItem");
+          fileItem.dataset.id = file.id;
+
+          const fileName = document.createElement("p");
+          fileName.classList.add("file-name");
+          fileName.textContent = file.name;
+
+          // Edit icon
+          const editIcon = document.createElement("span");
+          editIcon.classList.add("edit-icon");
+          editIcon.innerHTML = "✎";
+          editIcon.onclick = () => renameFile(file.id);
+
+          // Delete icon
+          const deleteIcon = document.createElement("span");
+          deleteIcon.classList.add("delete-icon");
+          deleteIcon.innerHTML = "🗑️";
+          deleteIcon.onclick = () => deleteFile(file.id);
+
+          fileItem.appendChild(fileName);
+          fileItem.appendChild(editIcon);
+          fileItem.appendChild(deleteIcon);
+
+          fileItem.addEventListener("click", () => selectFile(fileItem));
+
+          fileContainer.appendChild(fileItem);
+        });
+      }
+
+      // Select a file
+      function selectFile(fileItem) {
+        const selected = document.querySelector(".fileItem.selected");
+        if (selected) selected.classList.remove("selected");
+        fileItem.classList.add("selected");
+      }
+
+      // Delete a file
+      function deleteFile(fileId) {
+        files = files.filter((file) => file.id !== fileId);
+        renderFiles();
+      }
+
+      // Rename a file
+      function renameFile(fileId) {
+        const file = files.find((f) => f.id === fileId);
+        const newName = prompt("Enter the new file name:", file.name);
+        if (newName) {
+          file.name = newName;
+          renderFiles();
+        }
+      }
+
+      // Copy a file
+      copyFileBtn.addEventListener("click", () => {
+        const selected = document.querySelector(".fileItem.selected");
+        if (selected) {
+          const fileId = parseInt(selected.dataset.id);
+          clipboard = files.find((f) => f.id === fileId);
+          alert("File copied to clipboard!");
+        } else {
+          alert("Please select a file to copy.");
+        }
+      });
+
+      // Cut a file
+      cutFileBtn.addEventListener("click", () => {
+        const selected = document.querySelector(".fileItem.selected");
+        if (selected) {
+          const fileId = parseInt(selected.dataset.id);
+          clipboard = { ...files.find((f) => f.id === fileId), cut: true };
+          files = files.filter((f) => f.id !== fileId);
+          renderFiles();
+          alert("File cut to clipboard!");
+        } else {
+          alert("Please select a file to cut.");
+        }
+      });
+
+      // Paste a file
+      pasteFileBtn.addEventListener("click", () => {
+        if (clipboard) {
+          if (clipboard.cut) {
+            clipboard.cut = false;
+          }
+          const newFile = { ...clipboard, id: Date.now() };
+          files.push(newFile);
+          renderFiles();
+          clipboard = null;
+        } else {
+          alert("No file in clipboard.");
+        }
+      });
+
+      renderFiles(); // Initial rendering
+    </script>
+  </body>
+</html>

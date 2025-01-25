@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Crypto Collection</title>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: transparent;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    /* Neon Collection Grid */
+    .neon-collection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Product Card */
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #111;
+      padding: 20px;
+      border-radius: 30px;
+      /* box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.5); */
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    /* Icon */
+    .product-icon {
+      font-size: 4rem;
+      color: #00ffff;
+      margin-bottom: 15px;
+      /* text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; */
+    }
+
+    product-icon {
+
+      font-size: 4rem;
+      color: #00ffff;
+      margin-bottom: 15px;
+      /* text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; */
+
+    }
+
+    .eth {
+      font-size: 4rem;
+      color: #f8f8f8;
+      margin-bottom: 15px;
+      /* text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; */
+    }
+
+    /* Product Name */
+    .product-title {
+      font-size: 1.8rem;
+      color: #ffffff;
+      /* text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; */
+      margin-bottom: 10px;
+    }
+
+    /* Product Description */
+    .product-description {
+      font-size: 1rem;
+      color: #ccc;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <h1>Neon Crypto Collection</h1> -->
+  <div class="neon-collection">
+    <!-- Product 1: Bitcoin -->
+    <div class="product-card">
+      <div class="product-icon">₿</div> <!-- Bitcoin Icon -->
+      <h2 class="product-title">Bitcoin</h2>
+      <p class="product-description">The world's first decentralized cryptocurrency. A revolutionary digital asset with
+        a finite supply.</p>
+    </div>
+
+    <!-- Product 2: Ethereum -->
+    <div class="product-card">
+      <div class="product-icon eth">Ξ</div> <!-- Ethereum Icon -->
+      <h2 class="product-title">Ethereum</h2>
+      <p class="product-description">A decentralized platform for smart contracts and decentralized applications,
+        enabling innovation across industries.</p>
+    </div>
+
+    <!-- Product 3: Solana -->
+    <div class="product-card">
+      <div class="product-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana Icon" width="50"
+          height="50" />
+      </div>
+      <h2 class="product-title">Solana</h2>
+      <p class="product-description">A high-speed blockchain platform for decentralized applications with fast
+        transaction processing times.</p>
+    </div>
+
+    <!-- Product 4: Cardano -->
+    <div class="product-card">
+      <div class="product-icon">
+        <img src="https://cdn4.iconfinder.com/data/icons/crypto-currency-and-coin-2/256/cardano_ada-512.png"
+          alt="Cardano Icon" width="50" height="50" />
+      </div>
+      <h2 class="product-title">Cardano</h2>
+      <p class="product-description">A blockchain platform built on scientific philosophy, aiming for a secure and
+        scalable future for decentralized apps.</p>
+    </div>
+</body>
+
+</html>

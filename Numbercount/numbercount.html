@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown to 97%</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: transparent;
+        color: rgb(255, 255, 255);
+        font-family: "Arial", sans-serif;
+      }
+
+      .countdown-container {
+        font-size: 50px;
+        font-weight: bold;
+        padding: 20px;
+        background-color: transparent;
+        border-radius: 10px;
+      }
+
+      .countdown-text {
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="countdown-container">
+      <p class="countdown-text" id="countdown">0%</p>
+    </div>
+
+    <script>
+      let count = 0; // Initial value
+      const endValue = 97; // Final value for 97%
+      const duration = 1000; // Total time for countdown (in milliseconds)
+      const incrementRate = 50; // Interval time for each update (in milliseconds)
+
+      function updateCountdown() {
+        if (count <= endValue) {
+          // Update the percentage text
+          document.getElementById("countdown").textContent = `${count}%`;
+          count++; // Increment by 1 for a smooth countdown to 97%
+        } else {
+          clearInterval(countdownInterval); // Stop the interval when it reaches 97%
+        }
+      }
+
+      // Update every incrementRate milliseconds
+      const countdownInterval = setInterval(updateCountdown, incrementRate);
+    </script>
+  </body>
+</html>
