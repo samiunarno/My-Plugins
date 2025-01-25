@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Neon Cards</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background: transparent;
+        color: #fff;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      p.subtitle {
+        font-size: 16px;
+        color: #ffffff;
+        margin-bottom: 40px;
+      }
+
+      .card-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        padding: 20px;
+        background: linear-gradient(145deg, #1e1e2f, #29293d);
+        border-radius: 15px;
+        width: 250px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        background: linear-gradient(145deg, #ff007a, #ff4dff);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .icon img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .card:hover .icon {
+        background: linear-gradient(145deg, #00ffff, #4dffff);
+      }
+
+      .card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        font-size: 14px;
+        color: #b0b0b0;
+        line-height: 1.6;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #000000;
+        text-decoration: none;
+        background: linear-gradient(145deg, #00ffff, #4dffff);
+        border-radius: 25px;
+        transition: background 0.3s ease, box-shadow 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .btn:hover {
+        background: linear-gradient(145deg, #004dff, #00ffff);
+        transform: translateY(-3px);
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 24px;
+        }
+
+        p.subtitle {
+          font-size: 14px;
+        }
+
+        .card-container {
+          gap: 15px;
+        }
+
+        .card {
+          width: 200px;
+          padding: 15px;
+        }
+
+        .card h3 {
+          font-size: 16px;
+        }
+
+        .card p {
+          font-size: 12px;
+        }
+
+        .btn {
+          padding: 8px 18px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 20px;
+        }
+
+        p.subtitle {
+          font-size: 12px;
+          margin-bottom: 30px;
+        }
+
+        .card-container {
+          gap: 10px;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .card {
+          width: 180px;
+          padding: 12px;
+        }
+
+        .card h3 {
+          font-size: 14px;
+        }
+
+        .card p {
+          font-size: 10px;
+        }
+
+        .btn {
+          padding: 6px 14px;
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Empower Your Crypto Tax Journey</h1>
+    <p class="subtitle">
+      Trusted by over 1000+ crypto tax clients | 15+ Years of Tax and Accounting
+      Expertise
+    </p>
+    <div class="card-container">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="icon">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/5341/5341451.png"
+            alt="Business Crypto"
+          />
+        </div>
+        <h3>Business Crypto Accounting</h3>
+        <p>Crypto Taxes</p>
+        <p>Audits</p>
+        <p>IRS Compliance</p>
+        <p>Emerging Trends</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="icon">
+          <img
+            src="https://cdn1.iconfinder.com/data/icons/finance-metallic-vol-1-1/64/irs-512.png"
+            alt="Compound Pools"
+          />
+        </div>
+        <h3>IRS Compliance Assistance</h3>
+        <p>Crypto Taxes</p>
+        <p>Audits</p>
+        <p>IRS Compliance</p>
+        <p>Emerging Trends</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="icon">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/5341/5341269.png"
+            alt="Cheap Transactions"
+          />
+        </div>
+        <h3>Recurring Revenue Tax Support</h3>
+        <p>Crypto Taxes</p>
+        <p>Audits</p>
+        <p>IRS Compliance</p>
+        <p>Emerging Trends</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+    </div>
+  </body>
+</html>
