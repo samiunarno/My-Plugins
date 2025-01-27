@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Workflow</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      /* Three cards per row */
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .icon {
+      font-size: 40px;
+      color: #8f94fb;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #d1d5db;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two cards per row on tablets and smaller screens */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        /* Single card per row on mobile screens */
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+      }
+
+      .card p {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="icon">💰</div>
+      <h3>Tax Filing Assistance</h3>
+      <p>Filing taxes can be daunting, but we make it simple with accurate, IRS-compliant submissions to avoid
+        penalties.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🛡️</div>
+      <h3>Audit Preparation</h3>
+      <p>Facing an audit? We organize your documents and represent your interests for the best outcome.</p>
+    </div>
+    <div class="card">
+      <div class="icon">✔️</div>
+      <h3>Compliance Checkups</h3>
+      <p>We identify red flags in your records and ensure year-round compliance with actionable insights.</p>
+    </div>
+    <div class="card">
+      <div class="icon">⚙️</div>
+      <h3>Penalty Mitigation</h3>
+      <p>Our team works directly with the IRS to analyze and reduce penalties swiftly.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📋</div>
+      <h3>Payroll Tax Compliance</h3>
+      <p>Accurate payroll tax calculations and filings to avoid penalties and ensure a happy workforce.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🏢</div>
+      <h3>Business Tax Compliance</h3>
+      <p>We assist with tax planning and quarterly filings to keep your business compliant with IRS rules.</p>
+    </div>
+  </div>
+</body>
+
+</html>
