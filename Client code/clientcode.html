@@ -25,6 +25,7 @@
       background-color: white;
       font-family: Futura-PT;
       transition-duration: 0.4s;
+      cursor: pointer;
     }
 
     #daycare-toggle:hover,
@@ -175,7 +176,7 @@
   <p><i>Call us to learn about exclusive discount options!</i></p>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    function initPricingScript() {
       const dogToggle = document.getElementById("dog-toggle");
       const catToggle = document.getElementById("cat-toggle");
       const daycareToggle = document.getElementById("daycare-toggle");
@@ -186,38 +187,56 @@
       const boardingTable = document.querySelector(".boarding-tables");
       const catTable = document.querySelector(".cat-table");
 
-      // Dog Selection
-      dogToggle.addEventListener("change", function () {
-        if (dogToggle.checked) {
-          tableToggles.style.display = "block";
-          catTable.style.display = "none";
-          daycareTable.style.display = "none";
-          boardingTable.style.display = "none";
-        }
-      });
+      if (dogToggle) {
+        dogToggle.addEventListener("change", function () {
+          if (dogToggle.checked) {
+            tableToggles.style.display = "block";
+            catTable.style.display = "none";
+            daycareTable.style.display = "none";
+            boardingTable.style.display = "none";
+          }
+        });
+      }
 
-      // Cat Selection
-      catToggle.addEventListener("change", function () {
-        if (catToggle.checked) {
-          catTable.style.display = "block";
-          tableToggles.style.display = "none";
-          daycareTable.style.display = "none";
-          boardingTable.style.display = "none";
-        }
-      });
+      if (catToggle) {
+        catToggle.addEventListener("change", function () {
+          if (catToggle.checked) {
+            catTable.style.display = "block";
+            tableToggles.style.display = "none";
+            daycareTable.style.display = "none";
+            boardingTable.style.display = "none";
+          }
+        });
+      }
 
-      // Daycare Button
-      daycareToggle.addEventListener("click", function () {
-        daycareTable.style.display = "block";
-        boardingTable.style.display = "none";
-      });
+      if (daycareToggle) {
+        daycareToggle.addEventListener("click", function () {
+          if (daycareTable.style.display === "block") {
+            daycareTable.style.display = "none";
+          } else {
+            daycareTable.style.display = "block";
+            boardingTable.style.display = "none";
+          }
+        });
+      }
 
-      // Boarding Button
-      boardingToggle.addEventListener("click", function () {
-        boardingTable.style.display = "block";
-        daycareTable.style.display = "none";
-      });
-    });
+      if (boardingToggle) {
+        boardingToggle.addEventListener("click", function () {
+          if (boardingTable.style.display === "block") {
+            boardingTable.style.display = "none";
+          } else {
+            boardingTable.style.display = "block";
+            daycareTable.style.display = "none";
+          }
+        });
+      }
+    }
+
+    // Run on initial page load
+    document.addEventListener("DOMContentLoaded", initPricingScript);
+
+    // Run again when Squarespace dynamically loads content
+    document.addEventListener("ajaxComplete", initPricingScript);
   </script>
 </body>
 
