@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dancing Morphing Bubble</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Comfortaa', cursive;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(91, 174, 174, 0.4) 20%, rgba(91, 174, 174, 0.6) 50%, rgba(91, 174, 174, 0.3) 100%);
+      cursor: grab;
+      opacity: 0.9;
+      transition: all 0.3s ease-in-out;
+      animation: morph 2s infinite ease-in-out alternate, float 3s infinite ease-in-out alternate, dance 1.5s infinite alternate ease-in-out;
+      box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2), 5px 5px 25px rgba(0, 0, 0, 0.4);
+      transform: perspective(500px) rotateX(10deg) rotateY(15deg);
+    }
+
+    @keyframes morph {
+      0% {
+        border-radius: 50%;
+        transform: scale(1) rotate(0deg);
+      }
+
+      25% {
+        border-radius: 40% 60% 50% 50%;
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      50% {
+        border-radius: 60% 40% 55% 45%;
+        transform: scale(0.9) rotate(-10deg);
+      }
+
+      75% {
+        border-radius: 50% 55% 45% 60%;
+        transform: scale(1.15) rotate(15deg);
+      }
+
+      100% {
+        border-radius: 45% 50% 55% 50%;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-50px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes dance {
+      0% {
+        transform: translateX(0px) rotate(0deg);
+      }
+
+      50% {
+        transform: translateX(40px) rotate(10deg) scale(1.05);
+      }
+
+      100% {
+        transform: translateX(-40px) rotate(-10deg) scale(0.95);
+      }
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 600px) {
+      .bubble {
+        width: 200px;
+        height: 200px;
+        animation: morph 2s infinite ease-in-out alternate, float 3s infinite ease-in-out alternate, dance 1.5s infinite alternate ease-in-out;
+        box-shadow: inset 3px 3px 10px rgba(0, 0, 0, 0.2), 3px 3px 15px rgba(0, 0, 0, 0.4);
+      }
+
+      .image-wrapper {
+        width: 150px;
+        height: 150px;
+      }
+
+      .image-wrapper img {
+        object-fit: cover;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bubble" id="bubble"></div>
+  <div class="image-wrapper">
+    <img src="https://www.okoone.com/wp-content/uploads/2024/10/Industry-Insights-157.jpg" alt="Ezgi Image">
+  </div>
+
+  <script>
+    const bubble = document.getElementById("bubble");
+
+    let isMouseDown = false;
+    let initialX, initialY, offsetX, offsetY;
+
+    // Function to randomly change the shape of the bubble
+    function randomShape() {
+      let r1 = Math.floor(Math.random() * 50) + 30;
+      let r2 = Math.floor(Math.random() * 50) + 30;
+      let r3 = Math.floor(Math.random() * 50) + 30;
+      let r4 = Math.floor(Math.random() * 50) + 30;
+
+      bubble.style.borderRadius = `${r1}% ${r2}% ${r3}% ${r4}%`;
+    }
+
+    // Mouse down event to trigger shape change and enable dragging
+    bubble.addEventListener('mousedown', (e) => {
+      isMouseDown = true;
+      bubble.style.cursor = 'grabbing'; // Change cursor to grabbing while clicked
+      randomShape(); // Change shape on click
+
+      initialX = e.clientX;
+      initialY = e.clientY;
+      offsetX = bubble.offsetLeft;
+      offsetY = bubble.offsetTop;
+
+      function onMouseMove(event) {
+        if (!isMouseDown) return;
+
+        // Calculate mouse movement
+        const deltaX = event.clientX - initialX;
+        const deltaY = event.clientY - initialY;
+
+        // Move bubble with the mouse
+        bubble.style.left = `${offsetX + deltaX}px`;
+        bubble.style.top = `${offsetY + deltaY}px`;
+
+        // Change the shape as the mouse moves
+        randomShape();
+      }
+
+      // Add mouse move event listener
+      document.addEventListener('mousemove', onMouseMove);
+
+      // Mouse up event to stop dragging
+      document.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        bubble.style.cursor = 'grab'; // Change cursor back to grab
+        document.removeEventListener('mousemove', onMouseMove); // Remove the mousemove event
+      });
+    });
+  </script>
+</body>
+
+</html>
