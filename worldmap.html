@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive World Map</title>
+  <style>
+    #chartdiv {
+      width: 100%;
+      height: 500px;
+      max-width: 100%;
+    }
+  </style>
+
+  <!-- Load amCharts Libraries -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+</head>
+
+<body>
+
+  <!-- Chart Container -->
+  <div id="chartdiv"></div>
+
+  <!-- Chart Script -->
+  <script>
+    am5.ready(function () {
+
+      // Create root element
+      var root = am5.Root.new("chartdiv");
+
+      // Set themes
+      root.setThemes([
+        am5themes_Animated.new(root)
+      ]);
+
+      // Create the map chart
+      var chart = root.container.children.push(am5map.MapChart.new(root, {
+        panX: "rotateX",
+        panY: "rotateY",
+        projection: am5map.geoOrthographic(),
+        paddingBottom: 20,
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingRight: 20
+      }));
+
+      // Create main polygon series for countries
+      var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+        geoJSON: am5geodata_worldLow
+      }));
+
+      polygonSeries.mapPolygons.template.setAll({
+        tooltipText: "{name}",
+        toggleKey: "active",
+        interactive: true,
+        cursorOverStyle: "pointer"
+      });
+
+      polygonSeries.mapPolygons.template.states.create("hover", {
+        fill: root.interfaceColors.get("primaryButtonHover")
+      });
+
+      polygonSeries.mapPolygons.template.states.create("active", {
+        fill: root.interfaceColors.get("primaryButtonHover")
+      });
+
+      // Country-specific links
+      var countryLinks = {
+        "US": "https://example.com/usa",
+        "IN": "https://example.com/india",
+        "GB": "https://example.com/uk",
+        "FR": "https://example.com/france",
+        "DE": "https://example.com/germany",
+        "CA": "https://example.com/canada",
+        "AU": "https://example.com/australia",
+        "CN": "https://example.com/china",
+        "JP": "https://example.com/japan",
+        "BR": "https://example.com/brazil",
+        "RU": "https://example.com/russia",
+        "ZA": "https://example.com/south-africa",
+        "MX": "https://example.com/mexico",
+        "IT": "https://example.com/italy",
+        "ES": "https://example.com/spain",
+        "NG": "https://example.com/nigeria",
+        "AR": "https://example.com/argentina",
+        "SA": "https://example.com/saudi-arabia",
+        "KR": "https://example.com/south-korea",
+        "ID": "https://example.com/indonesia",
+        "TR": "https://example.com/turkey",
+        "NL": "https://example.com/netherlands",
+        "CH": "https://example.com/switzerland",
+        "SE": "https://example.com/sweden",
+        "BE": "https://example.com/belgium",
+        "PL": "https://example.com/poland",
+        "BD": "https://example.com/bangladesh",
+        "AF": "https://example.com/africa",
+        "DZ": "https://example.com/algeria",
+        "AO": "https://example.com/angola",
+        "AR": "https://example.com/argentina",
+        "AM": "https://example.com/armenia",
+        "AU": "https://example.com/australia",
+        "AT": "https://example.com/austria",
+        "AZ": "https://example.com/azerbaijan",
+        "BS": "https://example.com/bahamas",
+        "BH": "https://example.com/bahrain",
+        "BD": "https://example.com/bangladesh",
+        "BB": "https://example.com/barbados",
+        "BY": "https://example.com/belarus",
+        "BE": "https://example.com/belgium",
+        "BZ": "https://example.com/belize",
+        "BJ": "https://example.com/benin",
+        "BT": "https://example.com/bhutan",
+        "BO": "https://example.com/bolivia",
+        "BA": "https://example.com/bosnia-herzegovina",
+        "BW": "https://example.com/botswana",
+        "BR": "https://example.com/brazil",
+        "BN": "https://example.com/brunei",
+        "BG": "https://example.com/bulgaria",
+        "BF": "https://example.com/burkina-faso",
+        "BI": "https://example.com/burundi",
+        "KH": "https://example.com/cambodia",
+        "CM": "https://example.com/cameroon",
+        "CA": "https://example.com/canada",
+        "CV": "https://example.com/cape-verde",
+        "KY": "https://example.com/cayman-islands",
+        "CF": "https://example.com/central-african-republic",
+        "TD": "https://example.com/chad",
+        "CL": "https://example.com/chile",
+        "CN": "https://example.com/china",
+        "CO": "https://example.com/colombia",
+        "KM": "https://example.com/comoros",
+        "CG": "https://example.com/congo",
+        "CD": "https://example.com/democratic-republic-of-the-congo",
+        "CR": "https://example.com/costa-rica",
+        "HR": "https://example.com/croatia",
+        "CU": "https://example.com/cuba",
+        "CY": "https://example.com/cyprus",
+        "CZ": "https://example.com/czech-republic",
+        "DK": "https://example.com/denmark",
+        "DJ": "https://example.com/djibouti",
+        "DM": "https://example.com/dominica",
+        "DO": "https://example.com/dominican-republic",
+        "EC": "https://example.com/ecuador",
+        "EG": "https://example.com/egypt",
+        "SV": "https://example.com/el-salvador",
+        "GQ": "https://example.com/equatorial-guinea",
+        "ER": "https://example.com/eritrea",
+        "EE": "https://example.com/estonia",
+        "SZ": "https://example.com/eswatini",
+        "ET": "https://example.com/ethiopia",
+        "FJ": "https://example.com/fiji",
+        "FI": "https://example.com/finland",
+        "FR": "https://example.com/france",
+        "GA": "https://example.com/gabon",
+        "GM": "https://example.com/gambia",
+        "GE": "https://example.com/georgia",
+        "DE": "https://example.com/germany",
+        "GH": "https://example.com/ghana",
+        "GR": "https://example.com/greece",
+        "GD": "https://example.com/grenada",
+        "GT": "https://example.com/guatemala",
+        "GN": "https://example.com/guinea",
+        "GW": "https://example.com/guinea-bissau",
+        "GY": "https://example.com/guyana",
+        "HT": "https://example.com/haiti",
+        "HN": "https://example.com/honduras",
+        "HU": "https://example.com/hungary",
+        "IS": "https://example.com/iceland",
+        "IN": "https://example.com/india",
+        "ID": "https://example.com/indonesia",
+        "IR": "https://example.com/iran",
+        "IQ": "https://example.com/iraq",
+        "IE": "https://example.com/ireland",
+        "IL": "https://example.com/israel",
+        "IT": "https://example.com/italy",
+        "JM": "https://example.com/jamaica",
+        "JP": "https://example.com/japan",
+        "JO": "https://example.com/jordan",
+        "KZ": "https://example.com/kazakhstan",
+        "KE": "https://example.com/kenya",
+        "KI": "https://example.com/kiribati",
+        "KP": "https://example.com/north-korea",
+        "KR": "https://example.com/south-korea",
+        "KW": "https://example.com/kuwait",
+        "KG": "https://example.com/kyrgyzstan",
+        "LA": "https://example.com/laos",
+        "LV": "https://example.com/latvia",
+        "LB": "https://example.com/lebanon",
+        "LS": "https://example.com/lesotho",
+        "LR": "https://example.com/liberia",
+        "LY": "https://example.com/libya",
+        "LI": "https://example.com/liechtenstein",
+        "LT": "https://example.com/lithuania",
+        "LU": "https://example.com/luxembourg",
+        "MO": "https://example.com/macau",
+        "MK": "https://example.com/north-macedonia",
+        "MG": "https://example.com/madagascar",
+        "MW": "https://example.com/malawi",
+        "MY": "https://example.com/malaysia",
+        "MV": "https://example.com/maldives",
+        "ML": "https://example.com/mali",
+        "MT": "https://example.com/malta",
+        "MH": "https://example.com/marshall-islands",
+        "MQ": "https://example.com/martinique",
+        "MR": "https://example.com/mauritania",
+        "MU": "https://example.com/mauritius",
+        "YT": "https://example.com/mayotte",
+        "MX": "https://example.com/mexico",
+        "FM": "https://example.com/micronesia",
+        "MD": "https://example.com/moldova",
+        "MC": "https://example.com/monaco",
+        "MN": "https://example.com/mongolia",
+        "ME": "https://example.com/montenegro",
+        "MS": "https://example.com/montserrat",
+        "MA": "https://example.com/morocco",
+        "MZ": "https://example.com/mozambique",
+        "MM": "https://example.com/myanmar",
+        "NA": "https://example.com/namibia",
+        "NR": "https://example.com/nauru",
+        "NP": "https://example.com/nepal",
+        "NL": "https://example.com/netherlands",
+        "NZ": "https://example.com/new-zealand",
+        "NI": "https://example.com/nicaragua",
+        "NE": "https://example.com/niger",
+        "NG": "https://example.com/nigeria",
+        "NO": "https://example.com/norway",
+        "OM": "https://example.com/oman",
+        "PK": "https://example.com/pakistan",
+        "PA": "https://example.com/panama",
+        "PG": "https://example.com/papua-new-guinea",
+        "PY": "https://example.com/paraguay",
+        "PE": "https://example.com/peru",
+        "PH": "https://example.com/philippines",
+        "PL": "https://example.com/poland",
+        "PT": "https://example.com/portugal",
+        "QA": "https://example.com/qatar",
+        "RO": "https://example.com/romania",
+        "RU": "https://example.com/russia",
+        "RW": "https://example.com/rwanda",
+        "KN": "https://example.com/st-kitts-and-nevis",
+        "LC": "https://example.com/st-lucia",
+        "VC": "https://example.com/st-vincent-and-grenadines",
+        "WS": "https://example.com/samoa",
+        "SM": "https://example.com/san-marino",
+        "ST": "https://example.com/sao-tome-and-principe",
+        "SA": "https://example.com/saudi-arabia",
+        "SN": "https://example.com/senegal",
+        "RS": "https://example.com/serbia",
+        "SC": "https://example.com/seychelles",
+        "SL": "https://example.com/sierra-leone",
+        "SG": "https://example.com/singapore",
+        "SK": "https://example.com/slovakia",
+        "SI": "https://example.com/slovenia",
+        "SB": "https://example.com/solomon-islands",
+        "SO": "https://example.com/somalia",
+        "ZA": "https://example.com/south-africa",
+        "SS": "https://example.com/south-sudan",
+        "ES": "https://example.com/spain",
+        "LK": "https://example.com/sri-lanka",
+        "SD": "https://example.com/sudan",
+        "SR": "https://example.com/suriname",
+        "SE": "https://example.com/sweden",
+        "CH": "https://example.com/switzerland",
+        "SY": "https://example.com/syria",
+        "TW": "https://example.com/taiwan",
+        "TJ": "https://example.com/tajikistan",
+        "TZ": "https://example.com/tanzania",
+        "TH": "https://example.com/thailand",
+        "TL": "https://example.com/timor-leste",
+        "TG": "https://example.com/togo",
+        "TO": "https://example.com/tonga",
+        "TT": "https://example.com/trinidad-and-tobago",
+        "TN": "https://example.com/tunisia",
+        "TR": "https://example.com/turkey",
+        "TM": "https://example.com/turkmenistan",
+        "TV": "https://example.com/tuvalu",
+        "UG": "https://example.com/uganda",
+        "UA": "https://example.com/ukraine",
+        "AE": "https://example.com/united-arab-emirates",
+        "GB": "https://example.com/uk",
+        "US": "https://example.com/usa",
+        "UY": "https://example.com/uruguay",
+        "UZ": "https://example.com/uzbekistan",
+        "VU": "https://example.com/vanuatu",
+        "VE": "https://example.com/venezuela",
+        "VN": "https://example.com/vietnam",
+        "YE": "https://example.com/yemen",
+        "ZM": "https://example.com/zambia",
+        "ZW": "https://example.com/zimbabwe"
+      };
+
+
+
+
+      // Set up click event
+      polygonSeries.mapPolygons.template.events.on("click", function (ev) {
+        var id = ev.target.dataItem.get("id");
+        if (countryLinks[ id ]) {
+          window.open(countryLinks[ id ], "_blank");
+        }
+      });
+
+      // Create series for background fill
+      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+      backgroundSeries.mapPolygons.template.setAll({
+        fill: root.interfaceColors.get("alternativeBackground"),
+        fillOpacity: 0.1,
+        strokeOpacity: 0
+      });
+      backgroundSeries.data.push({
+        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+      });
+
+      var graticuleSeries = chart.series.unshift(
+        am5map.GraticuleSeries.new(root, {
+          step: 10
+        })
+      );
+
+      graticuleSeries.mapLines.template.set("strokeOpacity", 0.1);
+
+      // Make animation appear on load
+      chart.appear(1000, 100);
+
+    });
+  </script>
+
+</body>
+
+</html>
