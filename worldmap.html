@@ -10,6 +10,9 @@
       width: 100%;
       height: 500px;
       max-width: 100%;
+      overflow-y: hidden;
+      overflow-x: hidden;
+      background: linear-gradient(to bottom, white, deepskyblue, skyblue);
     }
   </style>
 
@@ -53,11 +56,13 @@
         geoJSON: am5geodata_worldLow
       }));
 
+      // Set the color to purple for countries
       polygonSeries.mapPolygons.template.setAll({
         tooltipText: "{name}",
         toggleKey: "active",
         interactive: true,
-        cursorOverStyle: "pointer"
+        cursorOverStyle: "pointer",
+        fill: am5.color(0x0000FF) // Purple color
       });
 
       polygonSeries.mapPolygons.template.states.create("hover", {
@@ -215,7 +220,6 @@
         "MC": "https://example.com/monaco",
         "MN": "https://example.com/mongolia",
         "ME": "https://example.com/montenegro",
-        "MS": "https://example.com/montserrat",
         "MA": "https://example.com/morocco",
         "MZ": "https://example.com/mozambique",
         "MM": "https://example.com/myanmar",
@@ -223,110 +227,100 @@
         "NR": "https://example.com/nauru",
         "NP": "https://example.com/nepal",
         "NL": "https://example.com/netherlands",
+        "NC": "https://example.com/new-caledonia",
         "NZ": "https://example.com/new-zealand",
         "NI": "https://example.com/nicaragua",
         "NE": "https://example.com/niger",
         "NG": "https://example.com/nigeria",
+        "NU": "https://example.com/niue",
+        "NF": "https://example.com/norfolk-island",
+        "MP": "https://example.com/northern-mariana-islands",
         "NO": "https://example.com/norway",
         "OM": "https://example.com/oman",
         "PK": "https://example.com/pakistan",
+        "PW": "https://example.com/palau",
+        "PS": "https://example.com/palestinian-territories",
         "PA": "https://example.com/panama",
         "PG": "https://example.com/papua-new-guinea",
         "PY": "https://example.com/paraguay",
         "PE": "https://example.com/peru",
         "PH": "https://example.com/philippines",
         "PL": "https://example.com/poland",
+        "PR": "https://example.com/puerto-rico",
         "PT": "https://example.com/portugal",
         "QA": "https://example.com/qatar",
+        "RE": "https://example.com/reunion",
         "RO": "https://example.com/romania",
         "RU": "https://example.com/russia",
         "RW": "https://example.com/rwanda",
+        "BL": "https://example.com/st-barthelemy",
+        "SH": "https://example.com/st-helena",
         "KN": "https://example.com/st-kitts-and-nevis",
         "LC": "https://example.com/st-lucia",
+        "MF": "https://example.com/st-martin",
+        "PM": "https://example.com/st-pierre-and-miquelon",
         "VC": "https://example.com/st-vincent-and-grenadines",
         "WS": "https://example.com/samoa",
         "SM": "https://example.com/san-marino",
-        "ST": "https://example.com/sao-tome-and-principe",
         "SA": "https://example.com/saudi-arabia",
         "SN": "https://example.com/senegal",
         "RS": "https://example.com/serbia",
         "SC": "https://example.com/seychelles",
         "SL": "https://example.com/sierra-leone",
         "SG": "https://example.com/singapore",
+        "SX": "https://example.com/sint-maarten",
         "SK": "https://example.com/slovakia",
         "SI": "https://example.com/slovenia",
         "SB": "https://example.com/solomon-islands",
         "SO": "https://example.com/somalia",
         "ZA": "https://example.com/south-africa",
-        "SS": "https://example.com/south-sudan",
+        "KR": "https://example.com/south-korea",
         "ES": "https://example.com/spain",
         "LK": "https://example.com/sri-lanka",
         "SD": "https://example.com/sudan",
         "SR": "https://example.com/suriname",
         "SE": "https://example.com/sweden",
-        "CH": "https://example.com/switzerland",
         "SY": "https://example.com/syria",
         "TW": "https://example.com/taiwan",
         "TJ": "https://example.com/tajikistan",
         "TZ": "https://example.com/tanzania",
         "TH": "https://example.com/thailand",
-        "TL": "https://example.com/timor-leste",
         "TG": "https://example.com/togo",
+        "TK": "https://example.com/tokelau",
         "TO": "https://example.com/tonga",
         "TT": "https://example.com/trinidad-and-tobago",
         "TN": "https://example.com/tunisia",
         "TR": "https://example.com/turkey",
         "TM": "https://example.com/turkmenistan",
+        "TC": "https://example.com/turks-and-caicos",
         "TV": "https://example.com/tuvalu",
         "UG": "https://example.com/uganda",
         "UA": "https://example.com/ukraine",
         "AE": "https://example.com/united-arab-emirates",
-        "GB": "https://example.com/uk",
-        "US": "https://example.com/usa",
+        "GB": "https://example.com/united-kingdom",
+        "US": "https://example.com/united-states",
         "UY": "https://example.com/uruguay",
         "UZ": "https://example.com/uzbekistan",
         "VU": "https://example.com/vanuatu",
+        "VA": "https://example.com/vatican-city",
         "VE": "https://example.com/venezuela",
         "VN": "https://example.com/vietnam",
+        "WF": "https://example.com/wallis-and-futuna",
+        "EH": "https://example.com/western-sahara",
         "YE": "https://example.com/yemen",
         "ZM": "https://example.com/zambia",
         "ZW": "https://example.com/zimbabwe"
       };
 
-
-
-
-      // Set up click event
-      polygonSeries.mapPolygons.template.events.on("click", function (ev) {
-        var id = ev.target.dataItem.get("id");
-        if (countryLinks[ id ]) {
-          window.open(countryLinks[ id ], "_blank");
+      polygonSeries.mapPolygons.template.events.on("hit", function (ev) {
+        var country = ev.target.dataItem.dataContext;
+        var countryCode = country.id;
+        if (countryLinks[ countryCode ]) {
+          window.open(countryLinks[ countryCode ], "_blank");
         }
       });
 
-      // Create series for background fill
-      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-      backgroundSeries.mapPolygons.template.setAll({
-        fill: root.interfaceColors.get("alternativeBackground"),
-        fillOpacity: 0.1,
-        strokeOpacity: 0
-      });
-      backgroundSeries.data.push({
-        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-      });
-
-      var graticuleSeries = chart.series.unshift(
-        am5map.GraticuleSeries.new(root, {
-          step: 10
-        })
-      );
-
-      graticuleSeries.mapLines.template.set("strokeOpacity", 0.1);
-
-      // Make animation appear on load
-      chart.appear(1000, 100);
-
-    });
+    }); // end am5.ready()
   </script>
 
 </body>
