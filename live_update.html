@@ -79,27 +79,25 @@
         const response = await fetch(weatherAPI);
         const data = await response.json();
 
-        const now = new Date();
-
-        // Get the timezone offset from the user's location
-        const timezoneOffset = data.timezone; // This comes from the API response as seconds
-
-        // Convert the timezone offset to the correct time in the user's region
-        const userTime = new Date(now.getTime() + timezoneOffset * 1000); // Convert seconds to milliseconds
-
-        const localTime = new Intl.DateTimeFormat("en-GB", {
-          timeZone: "UTC",
-          hour: '2-digit',
-          minute: '2-digit'
-        }).format(userTime);
-
         const temperature = data.main.temp;
         const sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit' });
         const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit' });
 
-        // Updating time, temperature, sunrise, and sunset
+        // Get the current time in Prague timezone and format as AM/PM
+        function getPragueTime() {
+          const pragueTime = new Date().toLocaleString("en-US", {
+            timeZone: "Europe/Prague",
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+          });
+          return pragueTime;
+        }
+
+        // Updating the time, temperature, sunrise, and sunset
         document.getElementById("weatherData").innerHTML = ` 
-          <span> ${data.name} time: <span class="count" id="time">${localTime}</span></span>
+          <span>Prague time: <span class="count" id="time">${getPragueTime()}</span></span>
           <span>Temperature: <span class="count" id="temp">${temperature.toFixed(2)}</span>°C</span>
           <span>Sunrise: <span class="count" id="sunrise">${sunrise}</span></span>
           <span>Sunset: <span class="count" id="sunset">${sunset}</span></span>
@@ -113,23 +111,25 @@
       }
     }
 
-    function getUserLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          fetchWeather(lat, lon); // Fetch weather for the user's location
-          setInterval(() => fetchWeather(lat, lon), 60000); // Update every 60 seconds
-        }, function (error) {
-          document.getElementById("weatherData").innerHTML = "Geolocation is not supported or permission denied.";
-        });
-      } else {
-        document.getElementById("weatherData").innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }
+    // Coordinates for Prague (Žižkov)
+    const lat = 50.0755;
+    const lon = 14.4378;
 
-    // Initial load (fetch weather based on user's geolocation)
-    getUserLocation();
+    // Fetch weather for Prague on initial load
+    fetchWeather(lat, lon);
+
+    // Update time every second
+    setInterval(() => {
+      document.getElementById("time").innerText = new Date().toLocaleString("en-US", {
+        timeZone: "Europe/Prague",
+        hour: '2-digit',
+        minute: '2-digit',
+        // second: '2-digit',
+        hour12: true
+      });
+    }, 1000); // Update every second
+
+    setInterval(() => fetchWeather(lat, lon), 60000); // Update weather every 60 seconds
   </script>
 
 </body>
