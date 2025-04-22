@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prague Weather</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    #weatherData {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    #weatherData span {
+      padding: 0px 0px 0px 8px;
+    }
+
+    .weather-container {
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .count {
+      font-weight: bold;
+      transition: all 0.5s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="weather-container">
+    <div id="weatherData">Loading...</div>
+  </div>
+
+  <script>
+    const apiKey = "bb1211b0cd6022c97c4101bb3a0c3208"; // OpenWeatherMap API Key
+
+    function animateNumber(element, newValue) {
+      let oldValue = parseFloat(element.innerText);
+      if (isNaN(oldValue)) oldValue = newValue;
+      let step = (newValue - oldValue) / 30;
+      let count = 0;
+
+      function updateValue() {
+        if (count < 30) {
+          oldValue += step;
+          element.innerText = oldValue.toFixed(2);
+          count++;
+          requestAnimationFrame(updateValue);
+        } else {
+          element.innerText = newValue.toFixed(2);
+        }
+      }
+
+      updateValue();
+    }
+
+    function getPragueTimeShort() {
+      return new Date().toLocaleTimeString("en-GB", {
+        timeZone: "Europe/Prague",
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+    }
+
+    async function fetchWeather(lat, lon) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const temperature = data.main.temp;
+        const sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString("en-GB", {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZone: "Europe/Prague"
+        });
+        const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString("en-GB", {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZone: "Europe/Prague"
+        });
+
+        document.getElementById("weatherData").innerHTML = `
+          <span>Prague Time: <span class="count" id="time">${getPragueTimeShort()}</span></span>
+          <span>Temperature: <span class="count" id="temp">${temperature.toFixed(2)}</span>°C</span>
+          <span>Sunrise: <span class="count">${sunrise}</span></span>
+          <span>Sunset: <span class="count">${sunset}</span></span>
+        `;
+
+        animateNumber(document.getElementById("temp"), temperature);
+
+      } catch (error) {
+        document.getElementById("weatherData").innerHTML = "Failed to fetch data.";
+        console.error(error);
+      }
+    }
+
+    const lat = 50.0755;
+    const lon = 14.4378;
+
+    fetchWeather(lat, lon);
+    setInterval(() => fetchWeather(lat, lon), 60000);
+
+    setInterval(() => {
+      const timeEl = document.getElementById("time");
+      if (timeEl) {
+        timeEl.innerText = getPragueTimeShort();
+      }
+    }, 1000);
+  </script>
+</body>
+
+</html>
