@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lottie Animation with White Gradient Gear</title>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: transparent;
+      overflow: hidden;
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body>
+
+  <dotlottie-player id="lottieGear" src="https://lottie.host/5d85c3fb-72c6-4f7f-9518-dbeae40a0f58/kEQ6NWxHuW.lottie"
+    background="transparent" speed="1" style="width: 400px; height: 400px" loop autoplay>
+  </dotlottie-player>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const player = document.getElementById("lottieGear");
+
+      player.addEventListener("load", () => {
+        const animation = player.getLottie();
+
+        // Find and update the gear color
+        animation.layers.forEach(layer => {
+          if (layer.nm && layer.nm.toLowerCase().includes("gear")) { // Adjust if needed
+            layer.shapes.forEach(shape => {
+              if (shape.ty === "fl") { // Fill type
+                shape.c.k = [ 1, 1, 1, 1 ]; // White color (RGBA)
+              }
+            });
+          }
+        });
+
+        player.setLottie(animation);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
