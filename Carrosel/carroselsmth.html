@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Logo Carousel</title>
+
+    <!-- Import Fonts & Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+      body {
+        font-family: 'Poppins', sans-serif !important;
+        background-color: rgba(211, 44, 44, 0) !important;
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+      }
+
+      .container {
+        padding-top: 20px;
+        padding-bottom: 30px;
+        background-color: rgba(255, 0, 0, 0) !important;
+      }
+
+      h2 {
+        text-align: center;
+        padding: 10px;
+        font-size: 32px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .colorful {
+        background: linear-gradient(90deg, #ff4d4d, #ff9900, #33cc33, #3399ff, #cc33ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+        font-size: 40px;
+      }
+
+      .slick-slide {
+        margin: 0 10px;
+      }
+
+      .slick-slide img {
+        width: 100%;
+        filter: grayscale(100%);
+        transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+      }
+
+      .slick-slide.slick-center img {
+        filter: grayscale(0%);
+        transform: scale(1.2);
+      }
+
+      .slick-list {
+        overflow: visible;
+        margin: 0;
+        padding: 0;
+      }
+
+      .slick-track {
+        display: flex;
+      }
+
+      .slick-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .customer-logos img {
+        max-height: 150px;
+        object-fit: contain;
+      }
+
+      .copy {
+        padding-top: 200px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Heading -->
+      <h2>
+        Welcome to <span class="colorful">Logo</span> Carousel Showcase
+      </h2>
+
+      <!-- Logo Carousel -->
+      <section class="customer-logos slider">
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_9bb9ff4fe1214873831161d3d44f084f~mv2.png" alt="tribella-logo-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_fe7414e7df3048759f1aa1ab5455e356~mv2.png" alt="greenbite-logo-300x300-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_16a3e1263e2e4802a305113b23d62c21~mv2.png" alt="whiskey-hound-logo-720" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_42d8117040784b518b30d1838ee5122c~mv2.png" alt="aqua-pure-bs-logo-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_f59de1bc9a414d3d9914167d145a1522~mv2.png" alt="genius-games-logo" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_e4c300fddc674cda8101fbb34ae96682~mv2.png" alt="fat-fuel-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_d7f75ced1e12494ab49b74a1932a87a3~mv2.png" alt="dr-woof-logo-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_78b43ab3bb4a448e920fd6088b074dfe~mv2.png" alt="Pet-Scy-bluetxtwithtransparentbg" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_d2ad0fc1019b47438c7b61eacf436cf3~mv2.png" alt="Pet-Scy-bluetxtwithtransparentbg" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_c299a8e84dc746d684fc205f851ccadd~mv2.png" alt="Pet-Scy-bluetxtwithtransparentbg" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_307d7509385f4f5a9ab8f3841c36d060~mv2.png" alt="Balance..." />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_4878a2e8e27244b3ab0f0f68882b3c7a~mv2.png" alt="Pet-Scy-bluetxtwithtransparentbg" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_241e9152ab934b69a86181b4311f4f79~mv2.png" alt="Asset-2" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_6c2bbd80411543e88b22732b3f0f505d~mv2.png" alt="perfectpetzzz-1-360" />
+          </a>
+        </div>
+
+        <div class="slide">
+          <a target="_blank" href="#">
+            <img src="https://static.wixstatic.com/media/096f1e_4befcfa8e4244ae38435f2cdfd5c9dd7~mv2.png" alt="perfectpetzzz-1-360" />
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <p class="copy text-center font-weight-bold"></p>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $(".customer-logos").slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 0,
+          speed: 4000,
+          cssEase: 'linear',
+          arrows: false,
+          dots: false,
+          pauseOnHover: false,
+          infinite: true,
+          centerMode: true,
+          centerPadding: "0",
+          responsive: [
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 3,
+              },
+            },
+            {
+              breakpoint: 520,
+              settings: {
+                slidesToShow: 1,
+              },
+            },
+          ],
+        });
+      });
+    </script>
+
+  </body>
+</html>
