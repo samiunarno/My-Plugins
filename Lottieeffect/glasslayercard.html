@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glassy Square Effect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: transparent no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+
+    .glassy-box {
+      width: 300px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      /* Light background with transparency */
+      backdrop-filter: blur(10px);
+      /* Glassy blur effect */
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      /* Light border */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      /* Shadow for depth */
+      transition: transform 0.3s ease;
+    }
+
+    .glassy-box:hover {
+      transform: scale(1.05);
+      /* Slightly enlarge the box on hover */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glassy-box"></div>
+
+  <script>
+    // Add any JavaScript functionality if needed in the future
+  </script>
+</body>
+
+</html>
