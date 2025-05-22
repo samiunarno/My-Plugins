@@ -1,3 +1,5 @@
+//Before Try Remember My Name ALLAH AMIN
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,6 +224,7 @@
     let currentBg = bg1.style.backgroundImage.slice(5, -2);
     let visibleBg = 1;
 
+    // Preload images
     sections.forEach(section => {
       const img = new Image();
       img.src = section.getAttribute("data-bg");
@@ -242,17 +245,17 @@
     });
 
     function getTransitionDuration(speed) {
-      return 1000;
+      return 1000; // fixed duration
     }
 
-    function changeBackground(newBg) {
+    function changeBackground(newBg, duration = 1000) {
       if (newBg === currentBg) return;
+
       currentBg = newBg;
 
       const next = visibleBg === 1 ? bg2 : bg1;
       const prev = visibleBg === 1 ? bg1 : bg2;
 
-      const duration = getTransitionDuration(scrollSpeed);
       const durationSec = duration / 1000 + 's';
 
       next.classList.remove("no-animation");
@@ -266,32 +269,50 @@
       visibleBg = visibleBg === 1 ? 2 : 1;
     }
 
-    const sectionVisibility = new Map();
+    let sectionVisibility = new Map();
+    let lastVisibleIndex = 0;
+    let isTransitioning = false;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         sectionVisibility.set(entry.target, entry.intersectionRatio);
       });
 
-      let maxRatio = 0;
-      let mostVisible = null;
+      const sortedSections = [...sections].map((section, index) => ({
+        section,
+        index,
+        ratio: sectionVisibility.get(section) || 0
+      }));
 
-      sectionVisibility.forEach((ratio, section) => {
-        if (ratio > maxRatio) {
-          maxRatio = ratio;
-          mostVisible = section;
+      sortedSections.sort((a, b) => b.ratio - a.ratio);
+
+      const mostVisible = sortedSections[0];
+
+      if (mostVisible && !isTransitioning) {
+        const targetIndex = mostVisible.index;
+
+        if (targetIndex !== lastVisibleIndex) {
+          isTransitioning = true;
+
+          const newBg = mostVisible.section.getAttribute('data-bg');
+          const duration = getTransitionDuration(scrollSpeed);
+          changeBackground(newBg, duration);
+
+          lastVisibleIndex = targetIndex;
+
+          setTimeout(() => {
+            isTransitioning = false;
+          }, duration);
         }
-      });
-
-      if (mostVisible) {
-        const newBg = mostVisible.getAttribute('data-bg');
-        changeBackground(newBg);
       }
     }, {
       threshold: Array.from({ length: 100 }, (_, i) => i / 100)
     });
 
-    sections.forEach(section => observer.observe(section));
+    sections.forEach((section, index) => {
+      section.dataset.index = index;
+      observer.observe(section);
+    });
   </script>
 
 </body>
