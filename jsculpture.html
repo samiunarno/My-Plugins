@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zoom-Out Background Scroll</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    .bg-wrapper {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    .background.visible {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 1;
+    }
+
+    .background.no-animation {
+      transition: none !important;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      color: white;
+      text-align: left;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+
+    .content-wrapper {
+      max-width: 900px;
+      padding-left: 400px;
+      padding-right: 100px;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+      text-align: left;
+    }
+
+    .content-wrapper h1,
+    .content-wrapper h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 400;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .content-wrapper p {
+      font-family: Arial, sans-serif;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-weight: 500;
+      max-width: 28ch;
+      color: white;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .view-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: transparent;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      padding: 0.75rem 1.5rem 0.75rem 0;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .view-button .icon {
+      border: 2px solid white;
+      color: white;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: normal;
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+    }
+
+    .view-button:hover .icon {
+      background: white;
+      color: black;
+      transform: scale(1.15);
+    }
+
+    @media (max-width: 768px) {
+      .content-wrapper {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .content-wrapper h1,
+      .content-wrapper h2 {
+        font-size: 2rem;
+      }
+
+      .content-wrapper p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background layers -->
+  <div class="bg-wrapper">
+    <div id="bg1" class="background visible no-animation" style="background-image: url('https://jssculpture.wp-zone.com/wp-content/uploads/2025/05/ArchEmailnotext.jpg');"></div>
+    <div id="bg2" class="background"></div>
+  </div>
+
+  <!-- Sections -->
+  <section data-bg="https://c0.wallpaperflare.com/preview/480/836/1000/sculpture-museum.jpg">
+    <div class="content-wrapper">
+      <h1>Abstract</h1>
+      <p>Sculptures that speak through form and feeling. Emotion takes shape in its purest, most honest form.</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://jssculpture.wp-zone.com/wp-content/uploads/2025/04/frame001.jpg">
+    <div class="content-wrapper">
+      <h2>Emotion in Form</h2>
+      <p>In the world of abstract sculpture, the boundaries between emotion and material dissolve...</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://jssculpture.wp-zone.com/wp-content/uploads/2025/05/DriftSeries2k-2-960x386-1.jpg">
+    <div class="content-wrapper">
+      <h2>Expressionism</h2>
+      <p>Sculptures that capture raw emotion through distorted forms. A bold reflection of human experience.</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://jssculpture.wp-zone.com/wp-content/uploads/2025/04/2-1.png">
+    <div class="content-wrapper">
+      <h2>Conceptual</h2>
+      <p>Art that challenges our understanding of reality. Provoking thought through unconventional designs</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://jssculpture.wp-zone.com/wp-content/uploads/2025/04/3-1.png">
+    <div class="content-wrapper">
+      <h2>Minimalism</h2>
+      <p>Stripping away excess, focusing only on the essentials. Simplicity that speaks volumes.</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://jssculpture.wp-zone.com/wp-content/uploads/2025/05/frame001-1.jpg">
+    <div class="content-wrapper">
+      <h2>Surrealism</h2>
+      <p>Dreamlike sculptures that blur the line between fantasy and reality. Where the impossible comes to life.</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <section data-bg="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80">
+    <div class="content-wrapper">
+      <h2>Geometric</h2>
+      <p>Clean, precise shapes that evoke order and balance. The beauty of form through mathematical harmony.</p>
+      <button class="view-button"><span class="icon">➜</span> View</button>
+    </div>
+  </section>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+    const bg1 = document.getElementById("bg1");
+    const bg2 = document.getElementById("bg2");
+
+    let currentBg = bg1.style.backgroundImage.slice(5, -2);
+    let visibleBg = 1;
+
+    sections.forEach(section => {
+      const img = new Image();
+      img.src = section.getAttribute("data-bg");
+    });
+
+    let lastScrollY = window.scrollY;
+    let lastTimestamp = performance.now();
+    let scrollSpeed = 0;
+
+    window.addEventListener('scroll', () => {
+      const now = performance.now();
+      const deltaY = Math.abs(window.scrollY - lastScrollY);
+      const deltaT = now - lastTimestamp;
+
+      scrollSpeed = deltaY / deltaT;
+      lastScrollY = window.scrollY;
+      lastTimestamp = now;
+    });
+
+    function getTransitionDuration(speed) {
+      return 1000;
+    }
+
+    function changeBackground(newBg) {
+      if (newBg === currentBg) return;
+      currentBg = newBg;
+
+      const next = visibleBg === 1 ? bg2 : bg1;
+      const prev = visibleBg === 1 ? bg1 : bg2;
+
+      const duration = getTransitionDuration(scrollSpeed);
+      const durationSec = duration / 1000 + 's';
+
+      next.classList.remove("no-animation");
+      next.style.transition = `opacity ${durationSec} ease-in-out, transform ${durationSec} ease-in-out`;
+      prev.style.transition = `opacity ${durationSec} ease-in-out, transform ${durationSec} ease-in-out`;
+
+      next.style.backgroundImage = `url('${newBg}')`;
+      next.classList.add("visible");
+      prev.classList.remove("visible");
+
+      visibleBg = visibleBg === 1 ? 2 : 1;
+    }
+
+    const sectionVisibility = new Map();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        sectionVisibility.set(entry.target, entry.intersectionRatio);
+      });
+
+      let maxRatio = 0;
+      let mostVisible = null;
+
+      sectionVisibility.forEach((ratio, section) => {
+        if (ratio > maxRatio) {
+          maxRatio = ratio;
+          mostVisible = section;
+        }
+      });
+
+      if (mostVisible) {
+        const newBg = mostVisible.getAttribute('data-bg');
+        changeBackground(newBg);
+      }
+    }, {
+      threshold: Array.from({ length: 100 }, (_, i) => i / 100)
+    });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+
+</body>
+</html>
